@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NovaTarefaMail;
 use App\Models\Tarefa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TarefaController extends Controller
 {
@@ -16,16 +18,16 @@ class TarefaController extends Controller
 
     public function index()
     {
-       /* if (auth()->check()) { // verifica se o usuário esta autenticado
-            $id = auth()->user()->id;
-            $nome = auth()->user()->name;
-            $email = auth()->user()->email;
+        /* if (auth()->check()) { // verifica se o usuário esta autenticado
+             $id = auth()->user()->id;
+             $nome = auth()->user()->name;
+             $email = auth()->user()->email;
 
-            return "ID: $id | Nome: $nome | Email: $email";
-        } else {
-            return 'Voce nao esta logado no sistema';
-        }
-       */
+             return "ID: $id | Nome: $nome | Email: $email";
+         } else {
+             return 'Voce nao esta logado no sistema';
+         }
+        */
 
         if (Auth::check()) { // verifica se o usuário esta autenticado
             $id = Auth::user()->id;
@@ -47,12 +49,14 @@ class TarefaController extends Controller
     public function store(Request $request)
     {
         $tarefa = Tarefa::create($request->all());
+        $destino = auth()->user()->email;
+        Mail::to($destino)->send(new NovaTarefaMail($tarefa));
         return redirect()->route('tarefa.show', ['tarefa' => $tarefa->id]);
     }
 
     public function show(Tarefa $tarefa)
     {
-        //
+        return view('tarefa.show', ['tarefa' => $tarefa]);
     }
 
 

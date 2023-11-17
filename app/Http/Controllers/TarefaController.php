@@ -18,27 +18,9 @@ class TarefaController extends Controller
 
     public function index()
     {
-        /* if (auth()->check()) { // verifica se o usuário esta autenticado
-             $id = auth()->user()->id;
-             $nome = auth()->user()->name;
-             $email = auth()->user()->email;
-
-             return "ID: $id | Nome: $nome | Email: $email";
-         } else {
-             return 'Voce nao esta logado no sistema';
-         }
-        */
-
-        if (Auth::check()) { // verifica se o usuário esta autenticado
-            $id = Auth::user()->id;
-            $nome = Auth::user()->name;
-            $email = Auth::user()->email;
-
-            return "ID: $id | Nome: $nome | Email: $email";
-        } else {
-            return 'Voce nao esta logado no sistema';
-        }
-        return 'Chegamos aqui';
+        $user_id = auth()->user()->id;
+        $tarefa = Tarefa::where('user_id', $user_id)->get();
+        return view('tarefa.index', ['tarefas' => $tarefa]);
     }
 
     public function create()
@@ -57,7 +39,7 @@ class TarefaController extends Controller
         return redirect()->route('tarefa.show', ['tarefa' => $tarefa->id]);
     }
 
-    public function show(Tarefa $tarefa)
+    public function show(Tarefa $tarefa): string
     {
         return view('tarefa.show', ['tarefa' => $tarefa]);
     }

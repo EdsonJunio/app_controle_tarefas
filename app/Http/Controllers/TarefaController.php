@@ -19,7 +19,7 @@ class TarefaController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $tarefa = Tarefa::where('user_id', $user_id)->get();
+        $tarefa = Tarefa::where('user_id', $user_id)->paginate(2);
         return view('tarefa.index', ['tarefas' => $tarefa]);
     }
 

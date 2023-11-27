@@ -14,6 +14,9 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Tarefa</th>
                                 <th scope="col">Data limite conclusão</th>
+                                <th></th>
+                                <th></th>
+
                             </tr>
                             </thead>
 
@@ -24,21 +27,32 @@
                                     <td>{{ $t['tarefa'] }}</td>
                                     <td>{{ date('d/m/Y', strtotime($t['data_limite_conclusao']))}}</td>
                                     <td><a href="{{ route('tarefa.edit', $t['id']) }}">Editar</a></td>
+                                    <td>
+                                        <form id="form_{{  $t['id'] }}"
+                                              method="post"
+                                              action="{{ route('tarefa.destroy', ['tarefa' => $t['id']]) }}">
+                                            @method('DELETE')
+                                            @csrf
+                                        </form>
+                                        <a href="#"
+                                           onclick="document.getElementById('form_{{  $t['id'] }}').submit()">Excluir</a>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                         <nav>
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="{{ $tarefas->previousPageUrl() }}">Voltar</a></li>
+                                <li class="page-item"><a class="page-link" href="{{ $tarefas->previousPageUrl() }}">Voltar</a>
+                                </li>
 
                                 @for($i = 1; $i <= $tarefas->lastPage(); $i++)
-                                <li class="page-item {{ $tarefas->currentPage() == $i ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ $tarefas->url($i) }}">{{ $i }}</a>
-                                </li>
+                                    <li class="page-item {{ $tarefas->currentPage() == $i ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $tarefas->url($i) }}">{{ $i }}</a>
+                                    </li>
                                 @endfor
 
-                                <li class="page-item"><a class="page-link" href="{{ $tarefas->nextPageUrl() }}">Avançar</a></li>
+                                <li class="page-item"><a class="page-link"
+                                                         href="{{ $tarefas->nextPageUrl() }}">Avançar</a></li>
                             </ul>
                         </nav>
                     </div>

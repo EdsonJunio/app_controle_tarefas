@@ -60,7 +60,7 @@ class TarefaController extends Controller
     {
         $user_id = auth()->user()->id;
 
-        if (!$tarefa->user_id == $user_id) {
+        if (!$tarefa->user_id == auth()->User()->id) {
             return view('acesso-negado');
         }
 
@@ -70,6 +70,10 @@ class TarefaController extends Controller
 
     public function destroy(Tarefa $tarefa)
     {
-        //
+        if (!$tarefa->user_id == auth()->User()->id) {
+            return view('acesso-negado');
+        }
+        $tarefa->delete();
+        return redirect()->route('tarefa.index');
     }
 }

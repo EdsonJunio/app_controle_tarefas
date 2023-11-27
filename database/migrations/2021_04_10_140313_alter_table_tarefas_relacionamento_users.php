@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class AlterTableTarefasRelacionamentoUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tarefas', function (Blueprint $table) {
+        Schema::table('tarefas', function(Blueprint $table) {
             $table->unsignedBigInteger('user_id')->nullable()->after('id');
             $table->foreign('user_id')->references('id')->on('users');
         });
@@ -26,9 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('tarefas', function (Blueprint $table) {
+        Schema::table('tarefas', function(Blueprint $table) {
             $table->dropForeign('tarefas_user_id_foreign');
             $table->dropColumn('user_id');
         });
     }
-};
+}

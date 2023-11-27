@@ -26,8 +26,8 @@ class VerificarEmailNotification extends Notification
      */
     public static $toMailCallback;
 
-    public function __construct() {
-        $this->name;
+    public function __construct($name) {
+        $this->name = $name;
     }
 
     /**
@@ -67,11 +67,11 @@ class VerificarEmailNotification extends Notification
     protected function buildMailMessage($url)
     {
         return (new MailMessage)
-            ->subject(Lang::get('Confirmação de e-mail'))
-            ->greeting('Olá'.$this->name)
-            ->line(Lang::get('Clique no botão para validar seu email.'))
-            ->action(Lang::get('Click aqui para validar seu e-mail'), $url)
-            ->line(Lang::get('Caso você nao tenha se cadastrado em nosso sistema, apenas desconsidere essa mensagem'));
+            ->subject('Confirmação de e-mail')
+            ->greeting('Olá '.$this->name)
+            ->line('Clique no botão abaixo para validar seu e-mail')
+            ->action('Clique aqui para validar seu e-mail', $url)
+            ->line('Caso você não tenha se cadastrado em nosso sistema, apenas desconsidere essa mensagem');
     }
 
     /**

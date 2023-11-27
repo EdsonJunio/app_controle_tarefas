@@ -5,35 +5,29 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class MensagemTesteMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         //
     }
 
-    public function envelope(): Envelope
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
     {
-        return new Envelope(
-            subject: 'Mensagem Teste Mail',
-        );
-    }
-
-    public function content(): Content
-    {
-        return new Content(
-            markdown: 'emails.mensagem-teste',
-        );
-    }
-
-    public function attachments(): array
-    {
-        return [];
+        return $this->markdown('emails.mensagem-teste');
     }
 }

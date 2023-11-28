@@ -8,7 +8,7 @@
                 <div class="card-header">Tarefas<a href="{{route('tarefa.create')}}" class="float-right">Novo</a></div>
 
                 <div class="card-body">
-                    
+
                     <table class="table">
                         <thead>
                             <tr>
@@ -48,7 +48,7 @@
                                     <a class="page-link" href="{{ $tarefas->url($i) }}">{{ $i }}</a>
                                 </li>
                             @endfor
-                            
+
                             <li class="page-item"><a class="page-link" href="{{ $tarefas->nextPageUrl() }}">Avançar</a></li>
                         </ul>
                     </nav>
